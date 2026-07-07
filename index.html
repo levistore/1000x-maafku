@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pesan Penjelasan</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts: Space Grotesk, Inter & Instrument Serif -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital,wght@1,400&display=swap" rel="stylesheet">
+  
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Tailwind Configuration for Neobrutalism Customizations -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: '#111111',
+            paper: '#fff8df',
+            panel: '#f7f0d8',
+            soft: '#5f5f5f',
+            pink: '#ff4db8',
+            gold: '#ffd12f',
+            leaf: '#2ee66b',
+            sea: '#32c7ff',
+            red: '#ff4b3e',
+            purple: '#8b5cf6',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      --ink: #111111;
+      --paper: #fff8df;
+      --panel: #f7f0d8;
+      --pink: #ff4db8;
+      --gold: #ffd12f;
+      --leaf: #2ee66b;
+      --sea: #32c7ff;
+      --red: #ff4b3e;
+      --purple: #8b5cf6;
+    }
+
+    body {
+      background-color: var(--paper);
+      color: var(--ink);
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Core Neobrutalism Typography Rules */
+    .heading-xl {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1.0;
+    }
+
+    .serif-accent {
+      font-family: 'Instrument Serif', serif;
+      font-style: italic;
+      font-weight: 400;
+    }
+
+    .neo-card {
+      background: var(--panel);
+      border: 3px solid var(--ink);
+      box-shadow: 8px 8px 0 var(--ink);
+      position: relative;
+      overflow: hidden;
+      transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
+    }
+
+    .neo-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: .06;
+      background-image: radial-gradient(var(--ink) 1px, transparent 1px);
+      background-size: 10px 10px;
+      mix-blend-mode: multiply;
+    }
+
+    .neo-sticker {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      border: 3px solid var(--ink);
+      background: var(--gold);
+      color: var(--ink);
+      box-shadow: 5px 5px 0 var(--ink);
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+
+    .neo-button {
+      border: 3px solid var(--ink);
+      background: var(--pink);
+      color: var(--ink);
+      box-shadow: 6px 6px 0 var(--ink);
+      font-weight: 700;
+      font-family: 'Space Grotesk', sans-serif;
+      transition: .2s ease;
+    }
+
+    .neo-button:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 9px 9px 0 var(--ink);
+    }
+
+    .neo-button:active {
+      transform: translate(2px, 2px);
+      box-shadow: 3px 3px 0 var(--ink);
+    }
+
+    .neo-outline-button {
+      border: 3px solid var(--ink);
+      background: var(--paper);
+      color: var(--ink);
+      box-shadow: 6px 6px 0 var(--ink);
+      font-weight: 700;
+      font-family: 'Space Grotesk', sans-serif;
+      transition: .2s ease;
+    }
+
+    .neo-outline-button:hover {
+      background: var(--sea);
+      transform: translate(-3px, -3px);
+      box-shadow: 9px 9px 0 var(--ink);
+    }
+
+    .neo-outline-button:active {
+      transform: translate(2px, 2px);
+      box-shadow: 3px 3px 0 var(--ink);
+    }
+
+    /* Pure Polaroid Style without any text padding or caption fields */
+    .polaroid-card {
+      border: 3px solid var(--ink);
+      background: #ffffff;
+      box-shadow: 8px 8px 0 var(--ink);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .hero-grid {
+      background-image:
+        linear-gradient(var(--ink) 2px, transparent 2px),
+        linear-gradient(90deg, var(--ink) 2px, transparent 2px);
+      background-size: 64px 64px;
+      opacity: .07;
+      mask-image: radial-gradient(circle at center, black, transparent 75%);
+    }
+
+    .brutal-shape {
+      position: absolute;
+      border: 3px solid var(--ink);
+      box-shadow: 8px 8px 0 var(--ink);
+    }
+
+    @keyframes hardPop {
+      0% {
+        opacity: 0;
+        transform: translateY(28px) scale(.96) rotate(-1deg);
+      }
+      70% {
+        opacity: 1;
+        transform: translateY(-4px) scale(1.02) rotate(1deg);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1) rotate(0);
+      }
+    }
+
+    @keyframes brutalFloat {
+      0%, 100% {
+        transform: translate(0, 0) rotate(var(--r, 0deg));
+      }
+      50% {
+        transform: translate(0, -12px) rotate(calc(var(--r, 0deg) * -1));
+      }
+    }
+
+    .animate-hardpop {
+      animation: hardPop 0.6s cubic-bezier(.16, 1, .3, 1) forwards;
+    }
+
+    .animate-float-1 {
+      --r: -3deg;
+      animation: brutalFloat 6s ease-in-out infinite;
+    }
+
+    .animate-float-2 {
+      --r: 4deg;
+      animation: brutalFloat 8s ease-in-out infinite;
+    }
+
+    :focus-visible {
+      outline: 4px solid var(--sea);
+      outline-offset: 4px;
+    }
+
+    /* Physical parts of the envelope with precise z-index architecture */
+    .envelope-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 440px;
+      height: 280px;
+      margin: 0 auto;
+      perspective: 1200px;
+    }
+
+    /* The exact back layer of the physical pocket */
+    .envelope-back {
+      position: absolute;
+      inset: 0;
+      background: #ebd8b0;
+      border: 4px solid var(--ink);
+      border-radius: 0 0 16px 16px;
+      z-index: 10;
+      box-shadow: 8px 8px 0 var(--ink);
+    }
+
+    /* The flap folding down from top */
+    .envelope-flap-svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 140px;
+      z-index: 40;
+      transform-origin: top center;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .envelope-flap-svg.is-open {
+      transform: rotateX(180deg);
+      z-index: 5;
+    }
+
+    /* Pocket cover at the front hiding tucked elements */
+    .envelope-front-pocket {
+      position: absolute;
+      inset: 0;
+      z-index: 30;
+      pointer-events: none;
+    }
+
+    /* FIXED: Letter is sized down and centered perfectly to prevent leaking on the sides */
+    .letter-paper-tucked {
+      position: absolute;
+      bottom: 12px;
+      left: 10%; /* Shifted in to guarantee it hides perfectly within pocket boundaries */
+      width: 80%; /* Sized down from 90% to avoid spilling out on the sides */
+      height: 220px;
+      background: #fffef6;
+      border: 4px solid var(--ink);
+      border-radius: 8px;
+      z-index: 20;
+      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s;
+      transform: translateY(0);
+    }
+
+    .letter-paper-tucked.is-extracted {
+      transform: translateY(-160px) rotate(1deg);
+    }
+
+    /* Beautiful full view overlay letter to resolve mobile overflow clipping completely */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(17, 17, 17, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+
+    .modal-overlay.is-active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-letter-sheet {
+      background: #fffef6;
+      border: 4px solid var(--ink);
+      box-shadow: 12px 12px 0 var(--ink);
+      width: 100%;
+      max-width: 600px;
+      max-height: 85vh;
+      overflow-y: auto;
+      border-radius: 24px;
+      transform: scale(0.9) translateY(40px);
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .modal-overlay.is-active .modal-letter-sheet {
+      transform: scale(1) translateY(0);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 640px) {
+      .neo-card {
+        box-shadow: 5px 5px 0 var(--ink);
+      }
+      .polaroid-card {
+        box-shadow: 5px 5px 0 var(--ink);
+      }
+      .envelope-wrapper {
+        height: 220px;
+      }
+      .letter-paper-tucked {
+        height: 180px;
+        left: 10%;
+        width: 80%;
+      }
+      .letter-paper-tucked.is-extracted {
+        transform: translateY(-110px) rotate(1deg);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen relative flex flex-col justify-between">
+
+  <header class="w-full p-4 md:p-6 sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto flex justify-between items-center bg-[#fff8df] border-4 border-ink shadow-[6px_6px_0_#111] px-4 py-3 md:px-6 md:py-4 rounded-xl">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-full bg-pink border-2 border-ink flex items-center justify-center">
+          <i data-lucide="info" class="w-5 h-5 text-ink"></i>
+        </div>
+        <span class="font-bold tracking-tight text-lg md:text-xl font-['Space_Grotesk']">Pesan Penjelasan</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <span id="current-page-badge" class="neo-sticker rounded-full px-3 py-1 text-xs font-semibold select-none rotate-1">
+          Halaman 1/3
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <!-- BACKGROUND DECORATIONS (Floating Neobrutalism Shapes) -->
+  <div class="absolute inset-0 pointer-events-none overflow-hidden z-0">
+    <div class="absolute inset-0 hero-grid"></div>
+    
+    <div class="brutal-shape w-12 h-12 md:w-16 md:h-16 bg-purple top-[15%] left-[5%] rotate-12 animate-float-1 hidden md:block">
+      <div class="w-full h-full flex items-center justify-center">
+        <i data-lucide="help-circle" class="w-6 h-6 md:w-8 md:h-8 text-ink"></i>
+      </div>
+    </div>
+
+    <div class="brutal-shape w-16 h-16 rounded-full bg-gold top-[70%] left-[8%] -rotate-6 animate-float-2 hidden md:block">
+      <div class="w-full h-full flex items-center justify-center">
+        <i data-lucide="shield-alert" class="w-8 h-8 text-ink"></i>
+      </div>
+    </div>
+
+    <div class="brutal-shape w-14 h-14 bg-pink top-[20%] right-[6%] rotate-[15deg] animate-float-2 hidden md:block">
+      <div class="w-full h-full flex items-center justify-center">
+        <i data-lucide="mail" class="w-7 h-7 text-ink"></i>
+      </div>
+    </div>
+
+    <div class="brutal-shape w-16 h-16 bg-sea top-[60%] right-[5%] -rotate-[10deg] animate-float-1 hidden md:block">
+      <div class="w-full h-full flex items-center justify-center">
+        <i data-lucide="message-square-warning" class="w-8 h-8 text-ink"></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN SITES WRAPPER -->
+  <main class="flex-grow flex items-center justify-center px-4 py-8 md:py-16 z-10">
+    <div class="w-full max-w-4xl mx-auto">
+
+      <!-- ================= PAGE 1: ORIENTASI ================= -->
+      <section id="page-orientasi" class="page-section animate-hardpop">
+        <div class="text-center mb-6">
+          <span class="neo-sticker rounded-full px-4 py-2 text-sm uppercase font-bold tracking-wider rotate-[-1.5deg]">
+            <i data-lucide="alert-circle" class="w-4 h-4 inline-block mr-1"></i> Penjelasan Penting
+          </span>
+        </div>
+
+        <div class="neo-card rounded-3xl p-6 md:p-12 text-center relative border-4">
+          <div class="absolute top-0 left-0 bg-pink border-b-4 border-r-4 border-ink px-3 py-1 font-['Space_Grotesk'] text-xs font-bold uppercase tracking-wider text-ink">
+            Untuk dibaca sejenak
+          </div>
+          
+          <h1 class="heading-xl text-5xl md:text-7xl mt-4 mb-8">
+            Hai <span class="serif-accent text-pink">kamu.</span>
+          </h1>
+
+          <div class="space-y-6 md:space-y-8 text-base md:text-xl font-medium max-w-2xl mx-auto leading-relaxed text-ink">
+            <p class="border-b-2 border-dashed border-ink pb-4">
+              Aku bikin website kecil ini buat kamu.
+            </p>
+            <p class="border-b-2 border-dashed border-ink pb-4">
+              Bukan buat sok romantis, bukan juga buat maksa kamu langsung baik-baik aja.
+            </p>
+            <p class="bg-gold/20 p-4 border-2 border-ink rounded-xl rotate-[0.5deg]">
+              Aku cuma pengin nunjukin beberapa foto yang aku simpen, terus ada satu hal yang pengin aku bilang ke kamu. <br>
+              <span class="font-bold text-red">Pelan-pelan aja ya.</span>
+            </p>
+          </div>
+
+          <div class="mt-10 md:mt-12 flex justify-center">
+            <button onclick="navigateToPage(2)" class="neo-button rounded-2xl px-8 py-4 text-lg md:text-xl flex items-center gap-3">
+              Buka kejutan kecil ini
+              <i data-lucide="arrow-right" class="w-5 h-5"></i>
+            </button>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- ================= PAGE 2: FOTO-FOTO ================= -->
+      <section id="page-foto" class="page-section hidden animate-hardpop">
+        <div class="text-center mb-8">
+          <!-- FIXED: Replaced "DOKUMENTASI FOTO" badge with "Foto Kamuu" -->
+          <span class="neo-sticker rounded-full px-4 py-2 text-sm uppercase font-bold tracking-wider rotate-[2deg] bg-sea">
+            <i data-lucide="image" class="w-4 h-4 inline-block mr-1"></i> Foto Kamuu
+          </span>
+          <h2 class="heading-xl text-4xl md:text-6xl mt-6 mb-4">
+            Ini beberapa foto kamu yang aku <span class="serif-accent text-purple">simpen</span>.
+          </h2>
+          <p class="max-w-2xl mx-auto text-sm md:text-base font-semibold border-3 border-ink bg-panel p-4 rounded-xl shadow-[4px_4px_0_#111]">
+            Nggak ada maksud aneh-aneh, aku cuma pengin naro beberapa foto yang kamu kasih ke aku.
+          </p>
+        </div>
+
+        <div class="text-center mb-6">
+          <p class="inline-flex items-center gap-2 text-xs md:text-sm font-bold uppercase bg-gold border-2 border-ink px-3 py-1 rounded-md rotate-[-1deg]">
+            <i data-lucide="mouse-pointer" class="w-4 h-4"></i>
+            Klik foto untuk fokus melihat lebih dekat
+          </p>
+        </div>
+
+        <!-- Polaroid Photos Grid without caption texts -->
+        <div id="photos-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-12">
+          
+          <!-- Photo 1 -->
+          <div class="polaroid-card p-4 rounded-lg cursor-pointer transform rotate-[-2deg] hover:rotate-0 hover:scale-105" onclick="focusPhoto(this)">
+            <div class="w-full aspect-square bg-[#eaeaea] border-2 border-ink rounded overflow-hidden relative group">
+              <img src="assets/foto-1.jpg" alt="Foto 1" class="w-full h-full object-cover" onerror="handleImageError(this, 'Koleksi 1')">
+            </div>
+          </div>
+
+          <!-- Photo 2 -->
+          <div class="polaroid-card p-4 rounded-lg cursor-pointer transform rotate-[1.5deg] hover:rotate-0 hover:scale-105" onclick="focusPhoto(this)">
+            <div class="w-full aspect-square bg-[#eaeaea] border-2 border-ink rounded overflow-hidden relative group">
+              <img src="assets/foto-2.jpg" alt="Foto 2" class="w-full h-full object-cover" onerror="handleImageError(this, 'Koleksi 2')">
+            </div>
+          </div>
+
+          <!-- Photo 3 -->
+          <div class="polaroid-card p-4 rounded-lg cursor-pointer transform rotate-[-1.5deg] hover:rotate-0 hover:scale-105" onclick="focusPhoto(this)">
+            <div class="w-full aspect-square bg-[#eaeaea] border-2 border-ink rounded overflow-hidden relative group">
+              <img src="assets/foto-3.jpg" alt="Foto 3" class="w-full h-full object-cover" onerror="handleImageError(this, 'Koleksi 3')">
+            </div>
+          </div>
+
+          <!-- Photo 4 -->
+          <div class="polaroid-card p-4 rounded-lg cursor-pointer transform rotate-[2deg] hover:rotate-0 hover:scale-105" onclick="focusPhoto(this)">
+            <div class="w-full aspect-square bg-[#eaeaea] border-2 border-ink rounded overflow-hidden relative group">
+              <img src="assets/foto-4.jpg" alt="Foto 4" class="w-full h-full object-cover" onerror="handleImageError(this, 'Koleksi 4')">
+            </div>
+          </div>
+
+          <!-- Photo 5 -->
+          <div class="polaroid-card p-4 rounded-lg cursor-pointer transform rotate-[-1deg] hover:rotate-0 hover:scale-105" onclick="focusPhoto(this)">
+            <div class="w-full aspect-square bg-[#eaeaea] border-2 border-ink rounded overflow-hidden relative group">
+              <img src="assets/foto-5.jpg" alt="Foto 5" class="w-full h-full object-cover" onerror="handleImageError(this, 'Koleksi 5')">
+            </div>
+          </div>
+
+          <!-- Photo 6 -->
+          <div class="polaroid-card p-4 rounded-lg cursor-pointer transform rotate-[2.5deg] hover:rotate-0 hover:scale-105" onclick="focusPhoto(this)">
+            <div class="w-full aspect-square bg-[#eaeaea] border-2 border-ink rounded overflow-hidden relative group">
+              <img src="assets/foto-6.jpg" alt="Foto 6" class="w-full h-full object-cover" onerror="handleImageError(this, 'Koleksi 6')">
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Section explanation block and redirection buttons -->
+        <div class="text-center p-6 border-3 border-ink bg-[#fffef6] rounded-2xl max-w-xl mx-auto mb-10 shadow-[6px_6px_0_#111]">
+          <p class="font-bold text-ink text-sm sm:text-base">
+            Lanjut ya, ada satu hal yang pengin aku bilang setelah ini.
+          </p>
+        </div>
+
+        <div class="mt-8 flex justify-center">
+          <button onclick="navigateToPage(3)" class="neo-button rounded-2xl px-8 py-4 text-lg md:text-xl flex items-center gap-3">
+            Baca surat dari aku
+            <i data-lucide="mail" class="w-5 h-5"></i>
+          </button>
+        </div>
+      </section>
+
+
+      <!-- ================= PAGE 3: KERTAS SURAT DENGAN ANIMASI AMPLOP ================= -->
+      <section id="page-surat" class="page-section hidden animate-hardpop">
+        <div class="text-center mb-10">
+          <span class="neo-sticker rounded-full px-4 py-2 text-sm uppercase font-bold tracking-wider rotate-[-2deg] bg-pink">
+            <i data-lucide="mail-check" class="w-4 h-4 inline-block mr-1"></i> Ruang Penjelasan & Maaf
+          </span>
+          <h2 class="heading-xl text-4xl md:text-6xl mt-6 mb-4">
+            Surat dari <span class="serif-accent text-red">aku</span>
+          </h2>
+          <p class="text-sm font-bold text-soft max-w-md mx-auto">
+            Klik penutup amplop di bawah untuk membuka dan membaca pesan dari aku.
+          </p>
+        </div>
+
+        <!-- PHYSICAL INTERACTIVE ENVELOPE COMPONENT (Strictly responsive, zero layout breaks) -->
+        <div class="envelope-wrapper my-16">
+          
+          <!-- Back part of the Envelope container -->
+          <div class="envelope-back flex items-end justify-center">
+            <!-- Decorative badge hidden inside envelope pocket -->
+            <div class="w-16 h-16 rounded-full bg-pink border-3 border-ink mb-6 flex items-center justify-center opacity-60">
+              <i data-lucide="feather" class="w-8 h-8 text-ink"></i>
+            </div>
+          </div>
+
+          <!-- Letter Paper Sheet (Sits safely inside pocket, slides out safely) -->
+          <div id="letter-paper" class="letter-paper-tucked p-4 flex flex-col justify-between shadow-sm cursor-pointer" onclick="toggleEnvelope()">
+            <div class="border-b-2 border-dashed border-ink/40 pb-2">
+              <div class="w-12 h-3 bg-red/30 rounded-full"></div>
+            </div>
+            <!-- Sneak peak of text -->
+            <div class="space-y-2 opacity-50 select-none pointer-events-none">
+              <div class="h-3 bg-ink/20 rounded w-1/3"></div>
+              <div class="h-3 bg-ink/10 rounded w-3/4"></div>
+              <div class="h-3 bg-ink/10 rounded w-2/3"></div>
+            </div>
+            <div class="flex justify-between items-center pt-2 border-t border-ink/10">
+              <span class="text-[9px] font-bold text-soft">Penjelasan...</span>
+              <i data-lucide="chevron-up" class="w-3.5 h-3.5 text-ink"></i>
+            </div>
+          </div>
+
+          <!-- Front Pocket of Envelope Overlay -->
+          <div class="envelope-front-pocket">
+            <svg viewBox="0 0 440 280" class="w-full h-full drop-shadow-[0_4px_0_rgba(17,17,17,1)]" style="filter: drop-shadow(4px 4px 0px #111111);" xmlns="http://www.w3.org/2000/svg">
+              <!-- Left side fold -->
+              <path d="M 0,0 L 220,160 L 0,280 Z" fill="#e6ccb2" stroke="#111111" stroke-width="4" stroke-linejoin="round"/>
+              <!-- Right side fold -->
+              <path d="M 440,0 L 220,160 L 440,280 Z" fill="#e6ccb2" stroke="#111111" stroke-width="4" stroke-linejoin="round"/>
+              <!-- Bottom fold -->
+              <path d="M 0,280 L 220,140 L 440,280 Z" fill="#ddbf9e" stroke="#111111" stroke-width="4" stroke-linejoin="round"/>
+              <!-- Center Decorative Sticker -->
+              <circle cx="220" cy="170" r="32" fill="#ff4db8" stroke="#111111" stroke-width="4"/>
+            </svg>
+            <!-- Lucide checkmark icon overlaid on top of the seal sticker -->
+            <div class="absolute top-[170px] left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center pointer-events-none">
+              <i data-lucide="check" class="w-6 h-6 text-ink"></i>
+            </div>
+          </div>
+
+          <!-- Top Envelope Flap using interactive vector graphics with backface hidden transitions -->
+          <svg id="envelope-flap" onclick="toggleEnvelope()" class="envelope-flap-svg cursor-pointer" viewBox="0 0 440 140" xmlns="http://www.w3.org/2000/svg">
+            <path d="M 0,0 L 220,140 L 440,0 Z" fill="#ff4b3e" stroke="#111111" stroke-width="4" stroke-linejoin="round"/>
+            <text x="220" y="45" font-family="'Space Grotesk', sans-serif" font-weight="bold" font-size="14" fill="#ffffff" text-anchor="middle" letter-spacing="1">BUKA DI SINI</text>
+          </svg>
+
+        </div>
+
+        <!-- Controller Button for Envelope & Letter Sheet Interaction -->
+        <div class="flex justify-center mb-12">
+          <button id="envelope-btn" onclick="toggleEnvelope()" class="neo-outline-button rounded-2xl px-6 py-3 text-base flex items-center gap-3">
+            <i data-lucide="mail-open" class="w-5 h-5"></i>
+            Buka Amplop & Tarik Surat
+          </button>
+        </div>
+
+        <!-- Primary & Secondary CTAs for Page 3 -->
+        <div class="mt-12 flex flex-col sm:flex-row gap-6 justify-center items-center">
+          <a href="https://wa.me/628xxxxxxxxxx?text=Aku%20udah%20baca%20suratnya" target="_blank" class="neo-button rounded-2xl px-8 py-4 text-lg md:text-xl flex items-center justify-center gap-3 w-full sm:w-auto">
+            Kirim pesan ke aku
+            <i data-lucide="send" class="w-5 h-5"></i>
+          </a>
+          
+          <button onclick="navigateToPage(1)" class="neo-outline-button rounded-2xl px-8 py-4 text-lg md:text-xl flex items-center justify-center gap-3 w-full sm:w-auto">
+            <i data-lucide="refresh-cw" class="w-5 h-5"></i>
+            Baca ulang dari awal
+          </button>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ================= TACTILE MODAL SHEET OVERLAY FOR LETTER (No mobile overflow issues) ================= -->
+  <div id="modal-letter" class="modal-overlay">
+    <div class="modal-letter-sheet p-6 md:p-10 relative">
+      <button onclick="toggleEnvelope()" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-red border-3 border-ink flex items-center justify-center hover:scale-110 active:scale-95 transition-all shadow-[3px_3px_0_#111]">
+        <i data-lucide="x" class="w-6 h-6 text-white"></i>
+      </button>
+
+      <div class="border-b-3 border-dashed border-ink/30 pb-4 mb-6">
+        <h3 class="font-['Space_Grotesk'] font-bold text-xl text-red flex items-center gap-2">
+          <i data-lucide="feather" class="w-6 h-6 text-red"></i> Untuk Kamu,
+        </h3>
+      </div>
+
+      <div class="font-['Inter'] text-sm sm:text-base leading-relaxed text-ink space-y-6">
+        <p class="font-bold text-red text-lg">Aku minta maaf ya.</p>
+
+        <p>
+          Maaf karena aku udah banyak bikin kamu kecewa. Aku sadar, kadang aku bikin kamu capek sama sikap aku sendiri. Kamu udah berusaha sabar, tapi aku malah sering bikin kamu ngerasa kecewa lagi.
+        </p>
+
+        <p>
+          Aku juga mau jujur, aku belum sepenuhnya bisa lupain masa lalu aku. Tapi aku sadar, itu bukan alasan buat bikin kamu terluka. Kamu nggak salah, dan kamu nggak pantas kena dampak dari hal yang belum selesai di diri aku.
+        </p>
+
+        <p>
+          Aku tahu mungkin selama ini kamu ngerasa kayak aku belum benar-benar fokus sama kamu. Dan kalau kamu ngerasa begitu, aku paham. Karena sikap aku sendiri yang bikin kamu mikir ke sana.
+        </p>
+
+        <p class="bg-purple/10 p-4 border-2 border-dashed border-purple rounded-xl font-medium rotate-[0.5deg]">
+          Aku nggak mau terus-terusan jadi orang yang cuma bilang “maaf” tapi ngulangin hal yang sama. Aku mau berusaha pelan-pelan buat beresin diri aku sendiri, buat belajar lupain yang memang harus aku tinggalin, dan buat lebih ngehargain kamu yang ada di depan aku sekarang.
+        </p>
+
+        <p>
+          Aku nggak minta kamu langsung percaya lagi. Aku juga nggak minta kamu langsung maafin aku. Aku cuma pengin kamu tahu kalau aku sadar aku salah, dan aku masih mau berusaha buat jadi lebih baik.
+        </p>
+
+        <p class="font-bold border-t border-ink/20 pt-4">
+          Makasih karena selama ini udah sabar sama aku.
+        </p>
+      </div>
+
+      <!-- Letter Sign-off -->
+      <div class="mt-8 pt-4 border-t-2 border-dashed border-ink/30 flex justify-between items-center">
+        <div>
+          <p class="text-[10px] text-soft uppercase font-bold">Ditulis tulus dari hati</p>
+          <p class="font-semibold text-xs text-ink">Tegal, 2026</p>
+        </div>
+        <div class="text-right">
+          <p class="font-['Instrument_Serif'] italic text-2xl text-pink">Dari aku.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="w-full p-4 text-center z-10">
+    <p class="text-xs font-bold uppercase tracking-wider bg-ink text-paper inline-block px-3 py-1 border-2 border-ink shadow-[3px_3px_0_#ff4db8] rounded-md rotate-[-0.5deg]">
+      <i data-lucide="heart-handshake" class="w-4 h-4 inline-block mr-1 text-pink"></i> Dibuat khusus untukmu © 2026
+    </p>
+  </footer>
+
+  <script>
+    lucide.createIcons();
+
+    // Sound effect generator for tactile retro chime feedback
+    function playClickSound() {
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(466.16, ctx.currentTime); // Bb4 retro chime key
+        gain.gain.setValueAtTime(0.04, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.12);
+        osc.start(ctx.currentTime);
+        osc.stop(ctx.currentTime + 0.12);
+      } catch (e) {
+        // Suppress on autoplay restriction blocks
+      }
+    }
+
+    let isEnvelopeOpen = false;
+
+    // Fixed physical envelope controller with beautiful transitions
+    function toggleEnvelope() {
+      playClickSound();
+      const flap = document.getElementById('envelope-flap');
+      const paper = document.getElementById('letter-paper');
+      const modal = document.getElementById('modal-letter');
+      const btn = document.getElementById('envelope-btn');
+
+      if (!isEnvelopeOpen) {
+        flap.classList.add('is-open');
+        
+        // Step 1: Fold top flap open
+        setTimeout(() => {
+          // Step 2: Slide tuck paper UP out of envelope
+          paper.classList.add('is-extracted');
+          
+          // Step 3: Open large tactile readable modal sheet
+          setTimeout(() => {
+            modal.classList.add('is-active');
+            btn.innerHTML = `<i data-lucide="mail-check"></i> Tutup & Masukkan Surat`;
+            lucide.createIcons();
+          }, 600);
+
+        }, 300);
+
+        isEnvelopeOpen = true;
+      } else {
+        // Close modal sheet back inside
+        modal.classList.remove('is-active');
+
+        setTimeout(() => {
+          paper.classList.remove('is-extracted');
+          
+          setTimeout(() => {
+            flap.classList.remove('is-open');
+            btn.innerHTML = `<i data-lucide="mail-open"></i> Buka Amplop & Tarik Surat`;
+            lucide.createIcons();
+          }, 300);
+
+        }, 400);
+
+        isEnvelopeOpen = false;
+      }
+    }
+
+    // Handles single page application steps routing
+    function navigateToPage(pageNum) {
+      playClickSound();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      const page1 = document.getElementById('page-orientasi');
+      const page2 = document.getElementById('page-foto');
+      const page3 = document.getElementById('page-surat');
+      const pageBadge = document.getElementById('current-page-badge');
+
+      page1.classList.add('hidden');
+      page2.classList.add('hidden');
+      page3.classList.add('hidden');
+
+      if (pageNum === 1) {
+        page1.classList.remove('hidden');
+        pageBadge.innerText = 'Halaman 1/3';
+        pageBadge.style.transform = 'rotate(1deg)';
+        pageBadge.style.backgroundColor = 'var(--gold)';
+      } else if (pageNum === 2) {
+        page2.classList.remove('hidden');
+        pageBadge.innerText = 'Halaman 2/3';
+        pageBadge.style.transform = 'rotate(-1.5deg)';
+        pageBadge.style.backgroundColor = 'var(--sea)';
+      } else if (pageNum === 3) {
+        page3.classList.remove('hidden');
+        pageBadge.innerText = 'Halaman 3/3';
+        pageBadge.style.transform = 'rotate(2deg)';
+        pageBadge.style.backgroundColor = 'var(--pink)';
+      }
+
+      if (pageNum !== 2) {
+        resetPhotoStates();
+      }
+
+      if (pageNum !== 3 && isEnvelopeOpen) {
+        toggleEnvelope();
+      }
+    }
+
+    // High quality aesthetic fallback renderer for missing photo images
+    function handleImageError(imgElement, contextText) {
+      const container = imgElement.parentElement;
+      if (!container) return;
+
+      const colors = ['bg-pink', 'bg-gold', 'bg-leaf', 'bg-sea', 'bg-purple', 'bg-red'];
+      const randomColor = colors[Math.floor(Math.random() * colors.length)];
+
+      container.innerHTML = `
+        <div class="w-full h-full ${randomColor} flex flex-col justify-center items-center p-4 text-center border-2 border-ink relative">
+          <div class="absolute inset-0 pointer-events-none opacity-10" style="background-image: radial-gradient(#111 1px, transparent 1px); background-size: 8px 8px;"></div>
+          <div class="w-12 h-12 rounded-full bg-white border-2 border-ink flex items-center justify-center mb-3 shadow-[3px_3px_0_#111]">
+            <i data-lucide="image" class="w-6 h-6 text-ink"></i>
+          </div>
+          <span class="font-['Space_Grotesk'] font-bold text-xs md:text-sm text-ink uppercase tracking-wider block">
+            Foto Kamu Di Sini
+          </span>
+          <span class="text-[10px] font-semibold text-ink bg-white/80 border border-ink rounded px-2 py-0.5 mt-2 block">
+            (${contextText})
+          </span>
+        </div>
+      `;
+      lucide.createIcons();
+    }
+
+    let focusedCard = null;
+
+    // Tactile Gallery focus & dim animations trigger
+    function focusPhoto(cardElement) {
+      playClickSound();
+      const gridCards = document.querySelectorAll('.polaroid-card');
+
+      if (focusedCard === cardElement) {
+        resetPhotoStates();
+        return;
+      }
+
+      focusedCard = cardElement;
+
+      gridCards.forEach(card => {
+        if (card === cardElement) {
+          card.style.transform = 'scale(1.1) rotate(0deg) translateY(-10px)';
+          card.style.zIndex = '40';
+          card.style.opacity = '1';
+          card.style.filter = 'none';
+          card.classList.add('border-pink');
+          card.style.boxShadow = '12px 12px 0 var(--ink)';
+        } else {
+          card.style.transform = 'scale(0.95)';
+          card.style.zIndex = '10';
+          card.style.opacity = '0.35';
+          card.style.filter = 'blur(1.5px)';
+          card.classList.remove('border-pink');
+          card.style.boxShadow = '4px 4px 0 var(--ink)';
+        }
+      });
+    }
+
+    function resetPhotoStates() {
+      const gridCards = document.querySelectorAll('.polaroid-card');
+      focusedCard = null;
+
+      gridCards.forEach((card, index) => {
+        const rotations = ['-2deg', '1.5deg', '-1.5deg', '2deg', '-1deg', '2.5deg'];
+        const rot = rotations[index % rotations.length];
+
+        card.style.transform = `rotate(${rot}) scale(1)`;
+        card.style.zIndex = '20';
+        card.style.opacity = '1';
+        card.style.filter = 'none';
+        card.classList.remove('border-pink');
+        card.style.boxShadow = '8px 8px 0 var(--ink)';
+      });
+    }
+
+    // Dismiss zoomed image focus when clicking empty background space
+    document.addEventListener('click', function(event) {
+      const isCard = event.target.closest('.polaroid-card');
+      const isButton = event.target.closest('button');
+      if (!isCard && !isButton && focusedCard !== null) {
+        resetPhotoStates();
+      }
+    });
+  </script>
+</body>
+</html>
